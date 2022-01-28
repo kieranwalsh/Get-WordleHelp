@@ -15,15 +15,15 @@
     Use this parameter to indicate letters that are in their correct position (i.e. shown in GREEN). Show unknown letters as '*'.
 
     .EXAMPLE
-    .\Get-WorldeHelp.ps1 -KnownLetters E,Z -ExcludedLetters T,O
+    .\Get-WorldleHelp.ps1 -KnownLetters E,Z -ExcludedLetters T,O
     This will search the word database and return all words that contain the letters E, Z, and not contain the letters T, or O.
 
     .EXAMPLE
-    .\Get-WorldeHelp.ps1 -KnownLetters E,Z, -ExcludedLetters T,O
-    This will search the word database and return all words that contain the letters E, Z, and not contain the letters T, or O.
+    .\Get-WorldleHelp.ps1 -KnownLetters E,Z,A -ExcludedLetters T,O,S,L -Positions *Z***
+    This will search the word database and return all words that contain the letters E, Z, A, that do not contain the letters T, O, S, L, but where Z is the second letter.
 
     .Notes
-    Filename: Get-WorldeHelp.ps1
+    Filename: Get-WorldleHelp.ps1
     Contributors: Kieran Walsh
     Created: 2022-01-28
     Last Updated: 2022-01-28
@@ -89,23 +89,10 @@ if($Positions)
             Write-Host " - $(($PossibleSolutions | Measure-Object).Count) matches remaining."
         }
     }
-
-
-
-    <#
-    foreach($Knownletter in $KnownLetters)
-    {
-        Write-Host "Matching $Knownletter" -NoNewline
-        $PossibleSolutions = $PossibleSolutions | Where-Object {$_ -match $Knownletter}
-        Write-Host " - $(($PossibleSolutions | Measure-Object).Count) matches remaining."
-
-    }
-    #>
 }
 
-
 ' '
-if((($PossibleSolutions | Measure-Object).Count) -gt 10)
+if((($PossibleSolutions | Measure-Object).Count) -gt 30)
 {
     'There are too many potential solutions to list yet. Try another word to narrow the list.'
 }
