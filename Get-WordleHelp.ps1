@@ -27,7 +27,7 @@
     Contributors: Kieran Walsh
     Created: 2022-01-28
     Last Updated: 2022-01-29
-    Version: 0.02.01
+    Version: 0.02.02
 #>
 
 [CmdletBinding()]
@@ -54,17 +54,16 @@ if(-not($Wordlist))
 $Wordlist = ($Links | Where-Object {$_ -match '/word/'}) -replace '/word/', '' -replace '/', ''
 
 Write-Host "The word list contains $($Wordlist.count) words."
-$Matched = $Wordlist
+$PossibleSolutions = $Wordlist
 
 if($ExcludedLetters)
 {
     foreach($ExcludedLetter in $ExcludedLetters)
     {
         Write-Host "Removing $(($ExcludedLetter).ToUpper())" -NoNewline
-        $Matched = $Matched | Where-Object {$_ -notmatch $ExcludedLetter}
-        Write-Host " - $(($Matched | Measure-Object).Count) matches remaining."
+        $PossibleSolutions = $PossibleSolutions | Where-Object {$_ -notmatch $ExcludedLetter}
+        Write-Host " - $(($PossibleSolutions| Measure-Object).Count) matches remaining."
     }
-    $PossibleSolutions = $Matched
 }
 
 if($KnownLetters)
