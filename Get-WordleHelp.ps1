@@ -95,6 +95,10 @@ if((($PossibleSolutions | Measure-Object).Count) -gt 30)
 {
     'There are too many potential solutions to list yet. Try another word to narrow the list.'
 }
+Elseif((($PossibleSolutions | Measure-Object).Count) -lt 1)
+{
+    Write-Host 'These are no known solutions. Please check your letters and try again.'
+}
 Else
 {
     Write-Host 'These are the possible solutions:'
