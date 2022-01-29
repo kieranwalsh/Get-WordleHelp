@@ -26,8 +26,8 @@
     Filename: Get-WorldleHelp.ps1
     Contributors: Kieran Walsh
     Created: 2022-01-28
-    Last Updated: 2022-01-28
-    Version: 0.02.00
+    Last Updated: 2022-01-29
+    Version: 0.02.01
 #>
 
 [CmdletBinding()]
@@ -83,7 +83,7 @@ if($Positions)
         $Position = $_
         if($Positions[$Position] -ne '*')
         {
-            Write-Host "Position $($Position + 1) $($Positions[$Position])" -NoNewline
+            Write-Host "Position $($Position + 1) $(([string]($Positions[$Position])).ToUpper())" -NoNewline
 
             $PossibleSolutions = $PossibleSolutions | Where-Object {$_[$Position] -match $Positions[$Position]}
             Write-Host " - $(($PossibleSolutions | Measure-Object).Count) matches remaining."
