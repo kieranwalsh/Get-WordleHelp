@@ -26,8 +26,8 @@
     Filename: Get-WorldleHelp.ps1
     Contributors: Kieran Walsh
     Created: 2022-01-28
-    Last Updated: 2022-01-29
-    Version: 0.02.02
+    Last Updated: 2022-01-30
+    Version: 0.02.03
 #>
 
 [CmdletBinding()]
@@ -58,6 +58,10 @@ $PossibleSolutions = $Wordlist
 
 if($ExcludedLetters)
 {
+    if($ExcludedLetters -notmatch ',')
+    {
+        $ExcludedLetters = $ExcludedLetters.ToCharArray()
+    }
     foreach($ExcludedLetter in $ExcludedLetters)
     {
         Write-Host "Removing $(($ExcludedLetter).ToUpper())" -NoNewline
@@ -68,6 +72,10 @@ if($ExcludedLetters)
 
 if($KnownLetters)
 {
+    if($KnownLetters -notmatch ',')
+    {
+        $KnownLetters = $KnownLetters.ToCharArray()
+    }
     foreach($Knownletter in $KnownLetters)
     {
         Write-Host "Matching $(($Knownletter).ToUpper()) " -NoNewline
@@ -76,6 +84,7 @@ if($KnownLetters)
 
     }
 }
+
 if($Positions)
 {
     0..4 | ForEach-Object {
