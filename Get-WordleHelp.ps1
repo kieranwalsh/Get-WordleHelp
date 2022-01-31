@@ -50,12 +50,12 @@ if($Wordlist.count -lt 10)
     $Links = (Invoke-WebRequest -Uri $URL -UseBasicParsing | Select-Object -Property *).Links.href
 }
 
+$Wordlist = ($Links | Where-Object {$_ -match '/word/'}) -replace '/word/', '' -replace '/', ''
 if(-not($Wordlist))
 {
     'The word list is empty. Verify that the URL is correct.'
     break
 }
-$Wordlist = ($Links | Where-Object {$_ -match '/word/'}) -replace '/word/', '' -replace '/', ''
 
 Write-Host "The word list contains $($Wordlist.count) words."
 $PossibleSolutions = $Wordlist
