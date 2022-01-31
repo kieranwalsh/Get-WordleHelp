@@ -14,6 +14,9 @@
     .PARAMETER Positions
     Use this parameter to indicate letters that are in their correct position (i.e. shown in GREEN). Show unknown letters as '*'.
 
+    .PARAMETER MaximumResults
+    There is no point in listing all the possible matches if there are hundreds. This parameter limits the maximum number of matches that are returned to 50 by default.
+
     .EXAMPLE
     .\Get-WorldleHelp.ps1 -KnownLetters E,Z -ExcludedLetters T,O
     This will search the word database and return all words that contain the letters E, Z, and not contain the letters T, or O.
@@ -26,8 +29,8 @@
     Filename: Get-WorldleHelp.ps1
     Contributors: Kieran Walsh
     Created: 2022-01-28
-    Last Updated: 2022-01-30
-    Version: 0.02.03
+    Last Updated: 2022-01-31
+    Version: 0.02.04
 #>
 
 [CmdletBinding()]
@@ -36,7 +39,8 @@ Param(
     [string[]]$KnownLetters,
     [string[]]$ExcludedLetters,
     [validateLength(5, 5)]
-    [string]$Positions
+    [string]$Positions,
+    [int]$MaximumResults = 50
 )
 
 if($Wordlist.count -lt 10)
@@ -100,7 +104,7 @@ if($Positions)
 }
 
 ' '
-if((($PossibleSolutions | Measure-Object).Count) -gt 30)
+if((($PossibleSolutions | Measure-Object).Count) -gt $MaximumResults)
 {
     'There are too many potential solutions to list yet. Try another word to narrow the list.'
 }
@@ -110,6 +114,6 @@ Elseif((($PossibleSolutions | Measure-Object).Count) -lt 1)
 }
 Else
 {
-    Write-Host 'These are the possible solutions:'
+    Write-Host "These are the $(($PossibleSolutions | Measure-Object).Count) possible solutions:"
     ($PossibleSolutions.ToUpper())
 }
