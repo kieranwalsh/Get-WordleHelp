@@ -29,13 +29,12 @@
     Filename: Get-WorldleHelp.ps1
     Contributors: Kieran Walsh
     Created: 2022-01-28
-    Last Updated: 2022-01-31
-    Version: 0.02.04
+    Last Updated: 2022-02-01
+    Version: 0.02.05
 #>
 
 [CmdletBinding()]
 Param(
-    [Parameter()]
     [string[]]$KnownLetters,
     [string[]]$ExcludedLetters,
     [validateLength(5, 5)]
@@ -46,11 +45,9 @@ Param(
 if($Wordlist.count -lt 10)
 {
     Write-Host 'Gathering wordlist...'
-    $URL = 'https://wordfind.com/length/5-letter-words/'
-    $Links = (Invoke-WebRequest -Uri $URL -UseBasicParsing | Select-Object -Property *).Links.href
-}
+    $Wordlist = (Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt').content
 
-$Wordlist = ($Links | Where-Object {$_ -match '/word/'}) -replace '/word/', '' -replace '/', ''
+}
 if(-not($Wordlist))
 {
     'The word list is empty. Verify that the URL is correct.'
