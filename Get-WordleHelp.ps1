@@ -30,7 +30,7 @@
     Contributors: Kieran Walsh
     Created: 2022-01-28
     Last Updated: 2022-02-01
-    Version: 0.02.05
+    Version: 0.02.06
 #>
 
 [CmdletBinding()]
@@ -42,12 +42,9 @@ Param(
     [int]$MaximumResults = 50
 )
 
-if($Wordlist.count -lt 10)
-{
-    Write-Host 'Gathering wordlist...'
-    $Wordlist = (Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt').content
+Write-Host 'Gathering wordlist...'
+[array]$Wordlist = ((Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt').content).Split([Environment]::NewLine, [StringSplitOptions]::RemoveEmptyEntries)
 
-}
 if(-not($Wordlist))
 {
     'The word list is empty. Verify that the URL is correct.'
