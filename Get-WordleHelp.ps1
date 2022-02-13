@@ -39,7 +39,7 @@ Param(
     [string[]]$ExcludedLetters,
     [validateLength(5, 5)]
     [string]$Positions,
-    [int]$MaximumResults = 50
+    [int]$MaximumResults = 101
 )
 
 Write-Host 'Gathering wordlist...'
