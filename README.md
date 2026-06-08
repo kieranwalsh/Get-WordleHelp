@@ -1,13 +1,28 @@
 # Get-WordleHelp
-This is a simple little script that downloads an online Scrabble five-letter wordlist and allows you to narrow down all the possible solutions from the guesses you've already made.
 
-The important switches are:
-* -KnownLetters: The letters that you know are in the word.
-* -ExcludedLetters: The letters that are not in the word.
-* -Positions: Enter your 'Green' letters in this format \*Z***, where 'Z' is the only green letter on your line.
+Get-WordleHelp downloads an online 5-letter Wordle answer list and narrows possible matches based on:
+- letters known to be in the word
+- letters known not to be in the word
+- optional fixed positions for green letters
 
-This is what it looks like while running, but you no longer need to use commas to separate the letters.
+Parameters:
+- -KnownLetters: letters that must exist in the solution
+- -ExcludedLetters: letters that must not exist in the solution
+- -Positions: fixed positions using * for unknowns (example: *Z***)
+- -MaximumResults: max number of results to print (default 101)
+
+Accepted letter input styles:
+- Comma-separated: -KnownLetters E,Z -ExcludedLetters T,O
+- Quoted comma-separated: -KnownLetters "E, Z" -ExcludedLetters "T, O"
+- Compact string: -KnownLetters EZ -ExcludedLetters TO
+
+Note on spacing:
+- Using -KnownLetters E Z (or -ExcludedLetters T O) is not valid for this script signature when called via -File, because PowerShell can bind the extra token to -Positions.
+- Prefer comma-separated, quoted comma-separated, or compact string styles.
+
+Example:
+- .\Get-WordleHelp.ps1 -KnownLetters E,Z,A -ExcludedLetters T,O,S,L -Positions *Z***
+
+Screenshot:
 
 ![img](https://raw.githubusercontent.com/kieranwalsh/img/main/Get-WordleHelp.png)
-
-
